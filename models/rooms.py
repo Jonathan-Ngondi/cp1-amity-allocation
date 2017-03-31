@@ -16,7 +16,7 @@ class Rooms(Amity):
         else:
             self.all_rooms.update({room_name:room_type})
             if room_type == 'o' or room_type == 'O':
-                return "New office space "+room_name+" has been successfully created."
+                return "New office space "+str(room_name)+" has been successfully created."
             elif room_type == 'l' or room_type == 'L':
                 return "The living space ${} has been successfully created in Amity.".format(room_name)
             else:
@@ -38,6 +38,3 @@ class LivingSpace(Rooms):
         Rooms.__init__(self)
         self.max_capacity = 4
 
-new_room = Rooms()
-mozambique = new_room.create_room("o","Mozambique")
-print(mozambique)
