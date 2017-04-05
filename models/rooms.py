@@ -21,6 +21,8 @@ class Rooms(Amity):
                 return "The living space ${} has been successfully created in Amity.".format(room_name)
             else:
                 return "You have entered an invalid room type! Please try again."
+    def print_all(self):
+        pass
 
 
 

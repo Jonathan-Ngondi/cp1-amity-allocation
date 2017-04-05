@@ -52,13 +52,13 @@ class AmityMethodBaseTestCases(unittest.TestCase):
 
     def test_if_room_already_exists(self):
         """Test to check if the room already exists in Amity."""
-        print(self.mozambique.create_room("O","Coutonou"))
+        print(self.new_room.create_room("O","Coutonou"))
         self.assertEqual(self.new_room.create_room("O","Coutonou"), "This room already exists in Amity.", 
         msg="Should return a message if room exists.")
 
     def test_create_room(self):
         """Test to check if the create_room function works."""
-        print(self.mozambique.all_rooms)
+        print(self.new_room.all_rooms)
         self.assertEqual(self.new_room.create_room("o","Mozambique"), "New office space Mozambique has been successfully created.")
 
     def test_office_max_capacity_office(self):
@@ -90,9 +90,11 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.load_persons = self.new_person.load_file('people.txt')
         self.assertEquals(self.load_persons,"DIDACHUS ODHIAMBO has been allocated to Cotonou.")
 
-    # def test_print_all_rooms(self):
-    #     """"""
-    #     pass
+    def test_print_all_rooms(self):
+        """Tests whether the function to print_all_rooms prints all the rooms saved to Amity."""
+        self.assertEquals(self.new_room.print_all, "Cotonou/n")
+
+        
 
     # def test_print_available_rooms(self):
     #     """"""
