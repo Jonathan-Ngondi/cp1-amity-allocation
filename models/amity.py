@@ -1,9 +1,21 @@
 from random import randint, choice
 from models.rooms import *
-from models.person import Staff, Fellow
+from models.person import *
 
 class Amity(object):
-    """ """
+    """
+        Amity class is the main engine for room allocation in the Amity program.
+        
+        The main functionality of the program sits in this class;
+        create_room : creates a room in amity.
+        add_person : adds a person to amity and allocates them to a room.
+        reallocate_person : reallocates a person to amity.
+        print_allocated : prints the allocated people within the program.
+        print_unallocated : prints the unallocated people within the program.
+        load_people : loads people from a txt file into amity.
+        save_state : saves the state of amity to a db.
+
+     """
 
     def __init__(self):
         self.offices = []
@@ -19,8 +31,8 @@ class Amity(object):
             Create one of 2 types of rooms in Amity, a Living Space or an Office.
 
             Arguments:
-                room_type = a str describing the type of room, 'OFFICE' or 'LIVING SPACE'
-                room_name = a tuple describing the name of the room
+                room_type : a str describing the type of room, 'OFFICE' or 'LIVING SPACE'
+                room_name : a tuple describing the name of the room
         """
         
         if str(room_name) in self.rooms:
@@ -41,8 +53,12 @@ class Amity(object):
         else:
             return "Invalid room type input."
 
-    def randomly_allocate_office(self):
-
+    @staticmethod
+    def randomly_allocate_office():
+        """
+            Helper function that allocates people randomly to an office in amity.
+        
+        """
         all_full = Amity.check_if_offices_amity_full(self)
         if all_full is True:
             return "All offices are full, Amity member cannot be added at this time."
@@ -50,7 +66,12 @@ class Amity(object):
             allocation_choice = choice(self.offices)
             return allocation_choice
 
-    def randomly_allocate_ls(self):
+    @staticmethod        
+    def randomly_allocate_ls():
+        """
+            Helper function that allocates people randomly to an office in amity.
+        
+        """
 
         all_full = Amity.check_if_ls_amity_full(self)
         if all_full is True:
@@ -59,8 +80,12 @@ class Amity(object):
             allocation_choice = choice(self.livingspaces)
             return allocation_choice
 
-    def check_if_offices_amity_full(self):
-
+    @staticmethod        
+    def check_if_offices_amity_full():
+        """
+            Helper function that checks to see if the offices in amity are full.
+        
+        """
         is_full = False
         count = 0
 
@@ -74,8 +99,13 @@ class Amity(object):
             elif count == len(self.offices):
                 is_full = True
                 return is_full
-
-    def check_if_ls_amity_full(self):
+    
+    @staticmethod            
+    def check_if_ls_amity_full():
+        """
+            Helper function that checks to see if the living spaces in amity are full.
+        
+        """
 
         is_full = False
         count = 0
@@ -91,6 +121,16 @@ class Amity(object):
             return is_full
 
     def add_person(self, name, role, wants_accomodation=None):
+        """
+            Adds a person to Amity and allocates them randomly to an office space or if required
+            a living space. 
+
+            Arguments:
+                name : this is the person's name
+                role : this argument specifies whether they are a Fellow or Staff member
+                wants_accomodation : this is an optional argument that signifies whether a fellow wants 
+                                     accomodation or not.
+        """
         employee_id = randint(1000, 9999)
         if role.upper() == "STAFF":
             wants_accomodation = "N"
