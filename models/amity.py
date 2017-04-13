@@ -124,11 +124,6 @@ class Amity(object):
         employee_id = randint(1000, 9999)
         if role.upper() == "STAFF":
 
-            all_full_office = Amity.check_if_offices_amity_full(self)
-            if all_full_office is True:
-                return "All office spaces are full, Amity member cannot be added at this time."
-            else:
-
                 wants_accomodation = "N"
                 self.new_staff = Staff(employee_id, name)
                 self.staff.append(self.new_staff)
