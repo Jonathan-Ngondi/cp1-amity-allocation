@@ -1,5 +1,12 @@
 language: python
 python:
    - "3.6"
-install: "pip install -r requirements.txt"
-script: pytest
+install: 
+- pip install -r requirements.txt
+script: 
+- coverage run --source=tests tests.py
+
+after_success: coveralls
+cache: pip
+notifications:
+  slack: andela:wmSsz1ooGD33Eg8mXgPaThmz
