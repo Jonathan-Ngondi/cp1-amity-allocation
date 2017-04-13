@@ -1,3 +1,4 @@
+import os
 from random import randint, choice
 from models.rooms import *
 from models.person import *
@@ -201,16 +202,19 @@ class Amity(object):
                                                 (name, office_allocation.name, ls_allocation.name)
 
     def load_people(self, file_name):
-        with open(file_name, "r") as input_file:
+        dir_path = os.path.dirname(__file__)
+        file_path = os.path.join(dir_path, file_name + '.txt')
+        with open(file_path, "r") as input_file:
             for line in input_file:
                 string = line.split()
                 name = string[0] + " " + string[1]
                 role = string[2]
                 if len(string)< 4:
-                    print(self.add_person(name, role))  
+                    print(self.add_person(name, role))
                 else:
                     wants_accomodation = string[3]
                     print(self.add_person(name, role, wants_accomodation))
+
     
     def print_allocations(self):
         

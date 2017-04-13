@@ -61,7 +61,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         """Tests to check whether persons can be added via a txt file."""
         self.amity.create_room("Office","France")
         self.amity.create_room("LS","Nairobi")
-        self.amity.load_people('/Users/Mugiwara_Munyi/Checkpoints/CP1/tests/people.txt')
+        self.amity.load_people('people')
         self.assertEquals(self.amity.fellows[0].name, "DIDACHUS ODHIAMBO")
         self.assertIn("DIDACHUS ODHIAMBO", self.amity.allocations)
 
