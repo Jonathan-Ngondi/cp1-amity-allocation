@@ -23,6 +23,8 @@ class Staff(Person):
         super(Staff, self).__init__(name)
         self.employee_id = employee_id
         self.is_allocated = False
+    def __str__(self):
+        return self.name
         
 
 class Fellow(Person):
@@ -36,3 +38,6 @@ class Fellow(Person):
         self.employee_id = employee_id
         self.is_allocated = False
         employee_id = randint(1000, 9999)
+    
+    def __str__(self):
+        return self.name

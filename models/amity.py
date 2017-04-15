@@ -21,7 +21,7 @@ class Amity(object):
     def __init__(self):
         self.offices = []
         self.livingspaces = []
-        self.rooms = {}
+        self.rooms = []
         self.staff = []
         self.fellows = []
         self.employees = []
@@ -123,12 +123,20 @@ class Amity(object):
     
         """
         employee_id = randint(1000, 9999)
+
         if role.upper() == "STAFF":
+            if self.offices == []:
+                new_staff = Staff(employee_id, name)
+                self.staff.append(new_staff)
+                self.employees.append(new_staff)
+
+                return "%s has been added but there are no rooms created in Amity,\n create a room and reallocate the new member." % (name)
+            else:
 
                 wants_accomodation = "N"
-                self.new_staff = Staff(employee_id, name)
-                self.staff.append(self.new_staff)
-                self.employees.append(self.new_staff)
+                new_staff = Staff(employee_id, name)
+                self.staff.append(new_staff)
+                self.employees.append(new_staff)
                 self.allocations[name] = self.randomly_allocate_office()
                 office_allocation = self.allocations[name]
                 office_index = self.offices.index(office_allocation)
@@ -138,68 +146,77 @@ class Amity(object):
                 return  "%s has been allocated to %s." % (name, office_allocation.name)
 
         if role.upper() == "FELLOW":
-            if wants_accomodation == "N" or wants_accomodation == None:
-                
-                self.new_staff = Fellow(employee_id, name)
-                self.fellows.append(self.new_staff)
-                self.employees.append(self.new_staff)
-                all_full_office = Amity.check_if_offices_amity_full(self)
-                if all_full_office is True:
-                    return "All office spaces are full, Amity member cannot be added at this time."
+            if self.offices == []:
 
-                else:
-                    self.allocations[name] = self.randomly_allocate_office()
-                    office_allocation = self.allocations[name]
-                    office_index = self.offices.index(office_allocation)
-                    self.offices[office_index].num_of_persons += 1
-                    self.offices[office_index].current_occupants.append(name)
-                    return  "%s has been allocated to %s." % (name, office_allocation.name)
+                new_fellow = Fellow(employee_id, name)
+                self.fellows.append(new_fellow)
+                self.employees.append(new_fellow)
 
-            elif wants_accomodation == "Y":
+                return "%s has been added but there are no rooms created in Amity,\n create a room and reallocate the new member." % (name)
+            else:
 
-                self.new_staff = Fellow(employee_id, name)
-                self.fellows.append(self.new_staff)
-                self.employees.append(self.new_staff)
-                all_full_ls = Amity.check_if_ls_amity_full(self)
-                all_full_office = Amity.check_if_offices_amity_full(self)
-                
-                if all_full_ls is True and all_full_office is True:
+                if wants_accomodation == "N" or wants_accomodation == None:
                     
-                    return "All spaces are full, %s cannot be allocated at this time." % (name)
+                    new_staff = Fellow(employee_id, name)
+                    self.fellows.append(new_staff)
+                    self.employees.append(new_staff)
+                    all_full_office = Amity.check_if_offices_amity_full(self)
+                    if all_full_office is True:
+                        return "All office spaces are full, Amity member cannot be added at this time."
 
-                elif all_full_ls is True:
+                    else:
+                        self.allocations[name] = self.randomly_allocate_office()
+                        office_allocation = self.allocations[name]
+                        office_index = self.offices.index(office_allocation)
+                        self.offices[office_index].num_of_persons += 1
+                        self.offices[office_index].current_occupants.append(name)
+                        return  "%s has been allocated to %s." % (name, office_allocation.name)
 
-                    self.allocations[name] = self.randomly_allocate_office()
-                    office_allocation = self.allocations[name]
-                    office_index = self.offices.index(office_allocation)
-                    self.offices[office_index].num_of_persons += 1
-                    self.offices[office_index].current_occupants.append(name)
+                elif wants_accomodation == "Y":
+
+                    new_staff = Fellow(employee_id, name)
+                    self.fellows.append(new_staff)
+                    self.employees.append(new_staff)
+                    all_full_ls = Amity.check_if_ls_amity_full(self)
+                    all_full_office = Amity.check_if_offices_amity_full(self)
                     
-                    return  "%s has been allocated to %s." % (name, office_allocation.name)
-                
-                elif all_full_office is True:
-                    self.allocations[name] = self.randomly_allocate_ls()
-                    ls_allocation = self.allocations[name]
-                    ls_index = self.livingspaces.index(ls_allocation)
-                    self.livingspaces[ls_index].num_of_persons += 1
-                    self.livingspaces[ls_index].current_occupants.append(name)
-                    
-                    return  "%s has been allocated to %s." % (name, ls_allocation.name)
-                
-                else:
-                    self.allocations[name] = [self.randomly_allocate_office(),
-                                            self.randomly_allocate_ls()]
-                    office_allocation = self.allocations[name][0]
-                    office_index = self.offices.index(office_allocation)
-                    self.offices[office_index].num_of_persons += 1
-                    self.offices[office_index].current_occupants.append(name)
-                    ls_allocation = self.allocations[name][1]
-                    ls_index = self.livingspaces.index(ls_allocation)
-                    self.livingspaces[ls_index].num_of_persons += 1
-                    self.livingspaces[ls_index].current_occupants.append(name)
+                    if all_full_ls is True and all_full_office is True:
+                        
+                        return "All spaces are full, %s cannot be allocated at this time." % (name)
 
-                    return "%s has been allocated to %s and s/he can stay in %s." % \
-                                                (name, office_allocation.name, ls_allocation.name)
+                    elif all_full_ls is True:
+
+                        self.allocations[name] = self.randomly_allocate_office()
+                        office_allocation = self.allocations[name]
+                        office_index = self.offices.index(office_allocation)
+                        self.offices[office_index].num_of_persons += 1
+                        self.offices[office_index].current_occupants.append(name)
+                        
+                        return  "%s has been allocated to %s." % (name, office_allocation.name)
+                    
+                    elif all_full_office is True:
+                        self.allocations[name] = self.randomly_allocate_ls()
+                        ls_allocation = self.allocations[name]
+                        ls_index = self.livingspaces.index(ls_allocation)
+                        self.livingspaces[ls_index].num_of_persons += 1
+                        self.livingspaces[ls_index].current_occupants.append(name)
+                        
+                        return  "%s has been allocated to %s." % (name, ls_allocation.name)
+                    
+                    else:
+                        self.allocations[name] = [self.randomly_allocate_office(),
+                                                self.randomly_allocate_ls()]
+                        office_allocation = self.allocations[name][0]
+                        office_index = self.offices.index(office_allocation)
+                        self.offices[office_index].num_of_persons += 1
+                        self.offices[office_index].current_occupants.append(name)
+                        ls_allocation = self.allocations[name][1]
+                        ls_index = self.livingspaces.index(ls_allocation)
+                        self.livingspaces[ls_index].num_of_persons += 1
+                        self.livingspaces[ls_index].current_occupants.append(name)
+
+                        return "%s has been allocated to %s and s/he can stay in %s." % \
+                                                    (name, office_allocation.name, ls_allocation.name)
 
     def load_people(self, file_name):
         dir_path = os.path.dirname(__file__)
@@ -226,5 +243,57 @@ class Amity(object):
 
                      
 
-    def reallocate_person(self):
+    def reallocate_person(self, name, room_name):
+        if isinstance(self.search_rooms(room_name), str):
+            return "That room does not exist."
+        else:
+            self.remove_person_from_room(name)
+            room = self.search_rooms(room_name)
+            self.allocations[name] = room
+            room.current_occupants.append(name)
+            room.num_of_persons += 1
+
+    
+        
+    def search_rooms(self, room_name):
+        self.rooms = self.offices + self.livingspaces
+       
+       
+        for room in self.rooms:
+            try:
+                if room.name == room_name:
+                    return room
+            except:
+                return "Room not found."
+            # else:
+            #     return "%s is not a room in Amity." % (room_name)
+
+    def remove_person_from_room(self, name):
+        #Office case
+        for office in self.offices:
+            if name in office.current_occupants:
+                try:
+                    import pdb;     
+                    self.office.current_occupants.remove(name)
+                    self.office.num_of_persons -= 1
+                except:
+                    ValueError 
+        #Living space case
+        for ls in self.livingspaces:
+            if name in ls.current_occupants:
+                self.ls.current_occupants.remove(name)
+                self.ls.num_of_persons -= 1
+
+        
+                
+
+        
+    
+    def print_unallocated(self):
+        pass
+
+    def save_state(self):
+        pass
+
+    def load_state(self):
         pass
