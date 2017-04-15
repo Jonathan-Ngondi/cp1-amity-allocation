@@ -11,8 +11,7 @@ from nose.plugins.attrib import attr
 class AmityMethodBaseTestCases(unittest.TestCase):
 
     def setUp(self):
-        self.amity = Amity()
-        
+        self.amity = Amity()  
 
 
     @attr('create_room')
@@ -39,7 +38,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
     @attr('add_person')
     def test_add_person_working(self):
         """Tests to check whether a person was added in Amity."""
-        new_person = self.amity.add_person("James Muratha", "Fellow","Y")
+        self.amity.add_person("James Muratha", "Fellow","Y")
         self.assertEqual(len(self.amity.employees), 1)
     @attr('allocate_person')
     def test_add_person_allocates_a_person(self):
@@ -71,8 +70,8 @@ class AmityMethodBaseTestCases(unittest.TestCase):
     def test_save_state(self):
         """Tests whether the database saves data from Amity"""
         #Use mock here to simulate db
-        pass 
-
+        pass
+    
     def test_print_available_rooms(self):
         """Tests whether Amity prints all the available rooms"""
         pass

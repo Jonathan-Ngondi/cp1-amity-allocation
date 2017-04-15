@@ -120,7 +120,6 @@ class Amity(object):
                 role : this argument specifies whether they are a Fellow or Staff member
                 wants_accomodation : an optional argument that signifies whether a fellow wants
                                      accomodation or not.
-    
         """
         employee_id = randint(1000, 9999)
 
@@ -273,11 +272,10 @@ class Amity(object):
         for office in self.offices:
             if name in office.current_occupants:
                 try:
-                    import pdb;     
                     self.office.current_occupants.remove(name)
                     self.office.num_of_persons -= 1
                 except:
-                    ValueError 
+                    ValueError
         #Living space case
         for ls in self.livingspaces:
             if name in ls.current_occupants:

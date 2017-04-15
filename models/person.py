@@ -24,9 +24,8 @@ class Staff(Person):
         self.employee_id = employee_id
         self.is_allocated = False
     def __str__(self):
-        return self.name
-        
-
+        return self.name  
+    
 class Fellow(Person):
     """
 
