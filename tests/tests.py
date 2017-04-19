@@ -11,10 +11,10 @@ from nose.plugins.attrib import attr
 class AmityMethodBaseTestCases(unittest.TestCase):
 
     def setUp(self):
-        self.amity = Amity()  
+        self.amity = Amity()
+        model_office = self.amity.create_room('Office','Texas')
+        model_ls = self.amity.create_room('Ls','Hurlingham')
 
-
-    @attr('create_room')
     def test_create_office_room(self):
         """Test to check if the create_room function creates an office in amity."""
         new_room = self.amity.create_room("o","Mozambique")
@@ -24,6 +24,24 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         """Test to check whether the create_room function creates a living space in amity."""
         new_room = self.amity.create_room("ls","Malawi")
         self.assertEqual(new_room, "A living space named Malawi has been created.")
+
+    def test_create_room_against_duplicates(self):
+        self.amity.create_room('ls','Nanyuki')
+        newer_room = self.amity.create_room('ls','Nanyuki')
+        self.amity.create_room('O','NewYork')
+        newest_room = self.amity.create_room('O','NewYork')
+        self.assertEqual(newer_room, "What you doin' bana? That room has already been created.")
+        self.assertEqual(newest_room, "What you doin' bana? That room has already been created.")
+
+    def test_create_room_bad_room_type(self):
+        """"This tests asserts that input other than Office, O, LS, or LIVINGSPACE returns a message."""
+        new_room = self.amity.create_room("Jimbo","Manhattan")
+        self.assertEqual(new_room, "Ain't no such type of room as what you typed.")
+    
+    def test_create_room_name_is_alpha(self):
+        """This tests that the name of the room is alphabetical input."""
+        new_room = self.amity.create_room("Office","J3322%&*!)")
+        self.assertEqual(new_room, "The room name needs to be made up of L-E-T-T-E-R-S.")
 
     def test_office_max_capacity_office(self):
         """Test to check if the max_capacity of the office class is 6."""
@@ -35,19 +53,28 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.barbados = LivingSpace('Barbados')
         self.assertEqual(self.barbados.max_capacity, 4, "Should ensure that the max capacity of the living space is 4")
 
-    @attr('add_person')
-    def test_add_person_working(self):
-        """Tests to check whether a person was added in Amity."""
-        self.amity.add_person("James Muratha", "Fellow","Y")
+    
+    def test_add_person_adds_allocates_fellows(self):
+        """Tests to check whether amity adds and allocates a fellow."""
+        fellow = self.amity.add_person("James Muratha", "Fellow","Y")
         self.assertEqual(len(self.amity.employees), 1)
-    @attr('allocate_person')
-    def test_add_person_allocates_a_person(self):
-        """Tests whether a person gets allocated a room in Amity"""
-        self.amity.create_room('Office','Krypton')
-        self.amity.add_person("James Muratha", "Fellow")
-        self.assertIn("James Muratha", self.amity.allocations)
+        self.assertEqual(fellow, "James Muratha has been allocated to Texas and s/he can stay in Hurlingham.")
+    
+    def test_add_person_adds_allocates_staff(self):
+        """Tests to check whether amity adds and allocates a staff member."""
+        staff = self.amity.add_person("Joshua Mwaniki", "Staff")
+        self.assertEqual(len(self.amity.employees), 1)
+        self.assertEqual(staff, "Joshua Mwaniki has been allocated to Texas.")
 
-    @attr('reallocate_person')
+    def test_add_person_for_bad_name_input(self):
+        staff = self.amity.add_person("n00B5a!B0T", "Staff")
+        self.assertEqual(staff, "People's names need to be spelt with L-E-T-T-E-R-S!")
+
+    def test_add_person_no_room_created(self):
+       self.amity2 =Amity()
+       person = self.amity2.add_person("James Mwaniki", "Staff")
+       self.assertIn("James Mwaniki has been added but there are no rooms created in Amity,", person)
+   
     def test_reallocate_person(self):
         """Tests to check whether Amity will allocate a person a room."""
         pass
