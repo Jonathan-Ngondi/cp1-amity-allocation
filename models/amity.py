@@ -152,7 +152,7 @@ class Amity(object):
         if ''.join(name.split()).isalpha() is False:
             return  Fore.RED + "People's names need to be spelt with L-E-T-T-E-R-S!"
 
-        employee_id = randint(1000, 9999)
+        employee_id = randint(10000, 99999)
         if wants_accomodation is None:
             wants_accomodation = "N"
 
@@ -175,6 +175,10 @@ class Amity(object):
                 new_staff = Staff(employee_id, name)
                 office_object = self.check_if_offices_amity_full()
                 if office_object is True:
+                    self.staff.append(new_staff)
+                    self.employees.append(new_staff)
+                    new_staff.is_allocated = False
+                    
                     return Fore.BLUE + "All offices are full %s can't be allocated now." % (name)
 
                 else:
@@ -364,8 +368,12 @@ class Amity(object):
                     if found_person.name in room.current_occupants:
                         return Fore.RED + \
                         "Whatchu doin'? %s is already in %s fam!" % (found_person.name, room_name)
+
                     else:
-                        if isinstance(found_person, Fellow) and isinstance(room, Office):
+                        if room.num_of_persons == room.max_capacity:
+                            return Fore.RED + \
+                        "%s cannot be reallocated to %s because that room is full." % (found_person.name, room.name)
+                        elif isinstance(found_person, Fellow) and isinstance(room, Office):
                             self.remove_person_from_room(found_person.name, 'o')
                             room.current_occupants.append(found_person.name)
                             room.num_of_persons += 1
