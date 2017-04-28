@@ -32,7 +32,7 @@ class Person(BASE):
     __tablename__ = 'People'
     id_number = Column(Integer, primary_key=True)
     name = Column(String)
-    allocation_status = Column(Boolean)
+    allocation_status = Column(String)
     person_type = Column(String)
 
 

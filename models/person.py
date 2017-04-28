@@ -20,7 +20,7 @@ class Staff(Person):
     def __init__(self, employee_id, name):
         super(Staff, self).__init__(name)
         self.employee_id = employee_id
-        self.is_allocated = False
+        self.is_allocated = "No"
 
     def __str__(self):
         return self.name

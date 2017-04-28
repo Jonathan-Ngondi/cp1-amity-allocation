@@ -2,14 +2,16 @@
 This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
-    create_room  <room_name>...
+    create_room  <room_type> <room_name>...
     add_person <first_name> <last_name> <staff_role> [<wants_accommodation>]
     print_ids <first_name> <last_name>
     reallocate_person <person_identifier> <new_room_name>
     load_people [--o=<filename>]
-    print_allocated [--o=<filename>]
+    print_allocations [--o=<filename>]
     print_unallocated [-o=filename]
     print_room <room_name>
+    delete_room <room_name>
+
     save_state [--db=sqlite_database]
     load_state <sqlite_database>
 
@@ -85,8 +87,10 @@ class AmityCommandCentre (cmd.Cmd):
     def do_print_ids(self, arg):
         """Usage: print_ids [<fname>] [<lname>]
         """
-        self.amity.print_ids(arg['<fname>'], arg['<lname>'])
-
+        try:
+            self.amity.print_ids(arg['<fname>'], arg['<lname>'])
+        except:
+            print("That's not nice, why are you trying to break me?")
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
@@ -99,7 +103,7 @@ class AmityCommandCentre (cmd.Cmd):
         """Usage: print_allocated [--o=<filename>]
         """
         print(self.amity.print_allocated(arg['--o']))
-    
+
     @docopt_cmd
     def do_load_people(self, arg=None):
         """Usage: load_people [--o=<filename>]
@@ -116,7 +120,19 @@ class AmityCommandCentre (cmd.Cmd):
         """Usage: print_room [<room_name>]
         """
         print(self.amity.print_room(arg['<room_name>']))
-    
+
+    @docopt_cmd
+    def do_delete_room(self, arg):
+        """Usage: delete_room <room_name>
+        """
+        print(self.amity.delete_room(arg['<room_name>']))
+
+    @docopt_cmd
+    def do_delete_person(self, arg):
+        """Usage: delete_person <person_id>
+        """
+        print(self.amity.delete_member(arg['<person_id>']))
+
     @docopt_cmd
     def do_save_state(self, arg):
         """Usage: save_state [--db=<sqlite_database>]
