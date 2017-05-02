@@ -401,6 +401,10 @@ class Amity(object):
             for person in self.employees:
                 if person.name == occupant:
                     person.is_allocated = "No"
+        try:
+            self.delete_from_database_room(room_name, filename=None)
+        except:
+            return "%s is removed from Amity, but there was an issue removing from amity.db." % room_name
         return "%s has been deleted from Amity, guess we have to rebuild." % room_name
 
 
@@ -526,7 +530,7 @@ class Amity(object):
                     a_file.write(", ".join(space.current_occupants) + '\n')
                     a_file.write("\n")
 
-                return Fore.GREEN + "All allocations have been saved to %s." % filename
+                return Fore.GREEN + "All allocations have been saved to a txt file."
 
     def print_unallocated(self, filename=None):
         """"Prints the unallocated Fellows and Staff, and specifies their needs"""
@@ -558,7 +562,7 @@ class Amity(object):
                     if member.is_allocated == "No" or member.is_allocated == "Maybe":
                         a_file.write(member.name + "  " +
                                      str(member.employee_id) + '\n')
-            return Fore.BLUE + "These poor souls have been immortalized in %s" % filename
+            return Fore.BLUE + "These poor souls have been immortalized in a txt file." 
 
     def print_room(self, room_name):
         """Prints the occupants of a single room in Amity."""
@@ -591,6 +595,19 @@ class Amity(object):
         session = Session()
         person1 = session.query(Person).filter_by(id_number = id_given).first()
         session.delete(person1)
+        session.commit()
+
+    def delete_from_database_room(self, room_name, filename=None):
+        """"This method removes a user from the database."""
+        if filename is None:
+            filename = 'amity'
+        db.create_db(filename)
+        Session = sessionmaker()
+        engine = create_engine('sqlite:///' + filename + '.db')
+        Session.configure(bind=engine)
+        session = Session()
+        room1 = session.query(Room).filter_by(room_name = room_name).first()
+        session.delete(room1)
         session.commit()
 
     def save_state(self, filename):

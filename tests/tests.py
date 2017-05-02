@@ -232,9 +232,8 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.amity.add_person("Jonathan Kamau","Fellow","Y")
         message = self.amity.print_allocated('Test_people')
         self.assertEqual(message, \
-"\x1b[32mAll allocations have been saved to /Users/Mugiwara_Munyi/Checkpoints/CP1/models/textfiles/Test_people.txt.")
+"\x1b[32mAll allocations have been saved to a txt file.")
         os.remove('/Users/Mugiwara_Munyi/Checkpoints/CP1/models/textfiles/Test_people.txt')
-
 
     def test_print_unallocated(self):
         """Test asserts that test prints unallocated people to console."""
@@ -255,7 +254,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.amity.add_person("Gentle Fellow","Fellow","Y")
         message = self.amity.print_unallocated('Gthang')
         self.assertEquals(message, \
-"\x1b[34mThese poor souls have been immortalized in /Users/Mugiwara_Munyi/Checkpoints/CP1/models/textfiles/Gthang.txt")
+"\x1b[34mThese poor souls have been immortalized in a txt file.")
         os.remove('/Users/Mugiwara_Munyi/Checkpoints/CP1/models/textfiles/Gthang.txt')
     def test_print_room(self):
         """Tests whether room is printed to console."""
