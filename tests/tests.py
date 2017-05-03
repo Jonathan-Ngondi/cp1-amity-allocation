@@ -206,7 +206,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.amity.add_person("John Rambo", "Staff")
         person_id = self.amity.employees[0].employee_id
         message = self.amity.delete_member(person_id)
-        self.assertEquals(message, "\x1b[35mJOHN RAMBO removed from Amity but not from amity.db!")
+        self.assertEquals(message, "\x1b[23 chars]from Amity but there was an issue removing them from amity.db")
     
     def test_delete_member_works_for_db(self):
         """Tests that delete member removes an individual from a db."""
@@ -214,7 +214,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         self.amity.save_state(None)
         person_id = self.amity.employees[0].employee_id
         message = self.amity.delete_member(person_id)
-        self.assertEqual(message, "BERNARD MULOBI has been removed from Amity, happy trails!")
+        self.assertEqual(message, "\x1b[32mBERNARD MULOBI has been removed from Amity, happy trails!")
 
     def test_print_allocations(self):
         """Test asserts that test prints allocations to console."""
