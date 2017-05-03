@@ -4,7 +4,7 @@ from models.amity import Amity
 from models.person import Person, Staff, Fellow
 from models.rooms import Room, Office, LivingSpace
 from nose.plugins.attrib import attr
-import os
+# import os
 
 
 
@@ -25,7 +25,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
 
     def test_create_ls_room(self):
         """Test to check whether the create_room function creates a living space in amity."""
-        new_room = self.amity.create_room("ls", ["Malawi"])
+        self.amity.create_room("ls", ["Malawi"])
         lss = self.amity.livingspaces
         self.assertEqual(len(lss), 2)
 
@@ -181,7 +181,7 @@ class AmityMethodBaseTestCases(unittest.TestCase):
         """
         self.amity.add_person("Kabbaka Pyramid", "Fellow", "Y")
         self.amity.create_room("LS",["Kingston"])
-        message = self.amity.reallocate_person(self.amity.fellows[0].employee_id, "Kingston")
+        self.amity.reallocate_person(self.amity.fellows[0].employee_id, "Kingston")
         self.assertEqual(self.amity.livingspaces[0].current_occupants, [])
 
     def test_search_room_works(self):

@@ -97,7 +97,6 @@ class Amity(object):
                     elif office.num_of_persons == 6:
                         self.choice_o_list.remove(office)
                         return self.check_if_offices_amity_full()
-           
 
     def check_if_ls_amity_full(self):
         """
@@ -359,7 +358,7 @@ class Amity(object):
                         +"     " + "FELLOW")
                 else:
                     print(Fore.GREEN + str(person.employee_id) + " " + person.name \
-                    +"     "+ "STAFF")        
+                    +"     "+ "STAFF")
         else:
             person_name = fname + " " + lname
             for person in self.employees:
@@ -383,8 +382,8 @@ class Amity(object):
                     return Fore.GREEN + "%s has been removed from Amity, happy trails!"% person.name
                 except:
                     return Fore.MAGENTA + "%s removed from Amity but there was an issue removing them from amity.db!" % person.name
-        else:
-            return Fore.RED + "Stop trying to delete ghosts!"
+            else:
+                return Fore.RED + "Stop trying to delete ghosts!"
 
     def delete_room(self, room_name):
         """This method deletes rooms from Amity."""
@@ -404,7 +403,7 @@ class Amity(object):
                 if person.name == occupant:
                     person.is_allocated = "No"
         try:
-            self.delete_from_database_room(room_name, filename=None)
+            delete_from_database_room(room_name, filename=None)
         except:
             return "%s is removed from Amity, but there was an issue removing from amity.db." % room_name
         return "%s has been deleted from Amity, guess we have to rebuild." % room_name
@@ -599,7 +598,7 @@ class Amity(object):
         session.delete(person1)
         session.commit()
 
-    def delete_from_database_room(self, room_name, filename=None):
+    def delete_from_database_room(room_name, filename=None):
         """"This method removes a user from the database."""
         if filename is None:
             filename = 'amity'
