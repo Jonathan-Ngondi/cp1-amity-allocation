@@ -22,7 +22,6 @@ Options:
 """
 import cmd
 import pyfiglet
-import sys
 from colorama import *
 from docopt import docopt, DocoptExit
 from models.amity import Amity
@@ -89,7 +88,7 @@ class AmityCommandCentre (cmd.Cmd):
         """
         try:
             self.amity.print_ids(arg['<fname>'], arg['<lname>'])
-        except:
+        except ValueError:
             print("That's not nice, why are you trying to break me?")
 
     @docopt_cmd

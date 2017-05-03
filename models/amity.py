@@ -4,7 +4,6 @@ from random import randint, choice
 from models.rooms import *
 from models.person import *
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import db
 from models.db import *
@@ -50,8 +49,8 @@ class Amity(object):
 
         for item in room_name:
             item = item.upper()
-            for object in self.rooms:
-                if object.name == item:
+            for objects in self.rooms:
+                if objects.name == item:
                     return Fore.RED + "What you doin' bana? That room has already been created."
 
             if ''.join(room_name).isalpha() is False:
@@ -89,7 +88,7 @@ class Amity(object):
         else:
 
             allocation_choice = choice(self.choice_o_list)
-            
+
             for office in self.choice_o_list:
                 if office.name == allocation_choice.name.upper():
                     if office.num_of_persons < 6:
@@ -221,7 +220,7 @@ class Amity(object):
 
                         return Fore.BLUE +\
      "%s has been added but there are no offices "% (name)+\
-     "created in Amity, create an office and reallocate them" 
+     "created in Amity, create an office and reallocate them"
 
                     # Normal operating conditions
                     new_fellow = Fellow(employee_id, name)
@@ -411,7 +410,7 @@ class Amity(object):
         return "%s has been deleted from Amity, guess we have to rebuild." % room_name
 
 
-    def reallocate_person(self, id, room_name):
+    def reallocate_person(self, id_number, room_name):
         """This function reallocates a person in Amity to a new room using a unique id."""
 
         employees = self.staff + self.fellows
@@ -419,7 +418,7 @@ class Amity(object):
 
             for person in employees:
 
-                if int(person.employee_id) == id:
+                if int(person.employee_id) == id_number:
                     found_person = person
                     if self.search_rooms(room_name).name == 'NotFound':
 
@@ -565,7 +564,7 @@ class Amity(object):
                     if member.is_allocated == "No" or member.is_allocated == "Maybe":
                         a_file.write(member.name + "  " +
                                      str(member.employee_id) + '\n')
-            return Fore.BLUE + "These poor souls have been immortalized in a txt file." 
+            return Fore.BLUE + "These poor souls have been immortalized in a txt file."
 
     def print_room(self, room_name):
         """Prints the occupants of a single room in Amity."""

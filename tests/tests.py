@@ -167,17 +167,17 @@ class AmityMethodBaseTestCases(unittest.TestCase):
 
     def test_reallocate_person_fellow_not_removed(self):
         """This test confirms whether reallocate_person will keep person with livingspace
-            accomodated when allocating an office. 
+            accomodated when allocating an office.
         """
         self.amity.add_person("Kabbaka Pyramid", "Fellow", "Y")
         self.amity.create_room("Office",["Kingston"])
-        message = self.amity.reallocate_person(self.amity.fellows[0].employee_id, "Kingston")
+        self.amity.reallocate_person(self.amity.fellows[0].employee_id, "Kingston")
         self.assertEqual(self.amity.livingspaces[0].current_occupants, ['KABBAKA PYRAMID'])
 
     def test_reallocate_person_fellow_removed(self):
 
         """This test confirms whether reallocate_person will remove a fellow from livingspace
-            allocated when allocating a new livingspace. 
+            allocated when allocating a new livingspace.
         """
         self.amity.add_person("Kabbaka Pyramid", "Fellow", "Y")
         self.amity.create_room("LS",["Kingston"])

@@ -36,7 +36,6 @@ class Fellow(Person):
         super(Fellow, self).__init__(name)
         self.employee_id = employee_id
         self.is_allocated = False
-    
 
     def __str__(self):
         return self.name
