@@ -29,7 +29,7 @@ class Amity(object):
         self.offices = []
         self.choice_o_list = list(self.offices)
         self.livingspaces = []
-        self.choice_l_list = list(self.offices)
+        self.choice_l_list = list(self.livingspaces)
         self.rooms = []
 
         self.staff = []
@@ -89,9 +89,8 @@ class Amity(object):
         else:
 
             allocation_choice = choice(self.choice_o_list)
-            # try:
+            
             for office in self.choice_o_list:
-
                 if office.name == allocation_choice.name.upper():
                     if office.num_of_persons < 6:
                         return office
@@ -99,8 +98,7 @@ class Amity(object):
                     elif office.num_of_persons == 6:
                         self.choice_o_list.remove(office)
                         return self.check_if_offices_amity_full()
-            # except IndexError:
-            #     return True
+           
 
     def check_if_ls_amity_full(self):
         """
@@ -357,7 +355,12 @@ class Amity(object):
         """This method prints the ids of everybody and can also print the id of one member."""
         if fname is None and lname is None:
             for person in self.employees:
-                print(Fore.GREEN + str(person.employee_id) + " " + person.name)
+                if isinstance(person, Fellow):
+                        print(Fore.GREEN + str(person.employee_id) + " " + person.name\
+                        +"     " + "FELLOW")
+                else:
+                    print(Fore.GREEN + str(person.employee_id) + " " + person.name \
+                    +"     "+ "STAFF")        
         else:
             person_name = fname + " " + lname
             for person in self.employees:
@@ -378,11 +381,11 @@ class Amity(object):
                 self.employees.remove(person)
                 try:
                     self.delete_from_database(person_id)
-                    return "%s has been removed from Amity, happy trails!"% person.name
+                    return Fore.GREEN + "%s has been removed from Amity, happy trails!"% person.name
                 except:
-                    return Fore.MAGENTA + "%s removed from Amity but not from amity.db!" % person.name
-            else:
-                return "Stop trying to delete ghosts!"
+                    return Fore.MAGENTA + "%s removed from Amity but there was an issue removing them from amity.db!" % person.name
+        else:
+            return Fore.RED + "Stop trying to delete ghosts!"
 
     def delete_room(self, room_name):
         """This method deletes rooms from Amity."""

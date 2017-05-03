@@ -62,3 +62,7 @@ python app.py
 * ```load_state <database_name>``` loads data from an exisitng SQL database
 
 
+Watch the tutorial here:
+
+https://asciinema.org/a/8xh1vthx9ty5k6shbrw55zjea
+

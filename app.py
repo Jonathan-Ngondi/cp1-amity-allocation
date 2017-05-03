@@ -10,8 +10,8 @@ Usage:
     print_allocations [--o=<filename>]
     print_unallocated [-o=filename]
     print_room <room_name>
+    delete_member <id>
     delete_room <room_name>
-
     save_state [--db=sqlite_database]
     load_state <sqlite_database>
 
@@ -128,7 +128,7 @@ class AmityCommandCentre (cmd.Cmd):
         print(self.amity.delete_room(arg['<room_name>']))
 
     @docopt_cmd
-    def do_delete_person(self, arg):
+    def do_delete_member(self, arg):
         """Usage: delete_person <person_id>
         """
         print(self.amity.delete_member(arg['<person_id>']))
