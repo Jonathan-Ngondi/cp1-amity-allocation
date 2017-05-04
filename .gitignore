@@ -1,2 +1,8 @@
 *.pyc
+*.db
 .coverage
+.vscode
+script.py
+cover/
+.DS_Store
+.coveragerc

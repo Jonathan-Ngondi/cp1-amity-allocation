@@ -1,0 +1,6 @@
+# .coveragerc to control coverage.py
+[run]
+branch = False
+# ignore imported modules and classes that will otherwise lower coverage.
+omit = *sqlalchemy*, *decimal*, *numbers*, *models.py*, *models/db.py*,\
+       *models/person.py*, *models/rooms.py*, *sqlite3*, *colorama*, *ctypes*
