@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/Jonathan-Ngondi/cp1-amity-allocation/badge.svg?branch=master)](https://coveralls.io/github/Jonathan-Ngondi/cp1-amity-allocation?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3cf996f0fd7746a4869898548be8ddc4)](https://www.codacy.com/app/Jonathan-Ngondi/cp1-amity-allocation?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Jonathan-Ngondi/cp1-amity-allocation&amp;utm_campaign=Badge_Grade)
 
 
 # CP1-Amity-Allocation
